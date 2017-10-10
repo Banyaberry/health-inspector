@@ -1,9 +1,12 @@
 import React from 'react' // this makes this a React component. well i mean, to use react.
+import 'font-awesome/css/font-awesome.css'
+import './SearchBar.css'
+import PropTypes from 'prop-types'
 
 class SearchBar extends React.Component { //extends is inheritence in js
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = { //this is this component
             search: ''
@@ -16,6 +19,12 @@ class SearchBar extends React.Component { //extends is inheritence in js
             //event.target.name is search. on top, we've made
             //a key called search. These need to match up.
         })
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault() //prevents the browser's default. we dont want the page reloading
+        this.props.updateSearchTerm(this.state.search)
+
     }
 
     render(){ // this returns your JSX which turns into HTML
@@ -37,10 +46,22 @@ class SearchBar extends React.Component { //extends is inheritence in js
                         //onChange will pass in an event into this function ^
                     
                     />
+
+                    <button 
+                        type="submit"
+                        className="search-button"
+                        onClick={this.handleSubmit}
+                    >
+                        <i className="search-icon fa fa-search"/>
+                    </button>
                 </form>
             </div>
         )
     }
+}
+
+PropTypes.PropTypes = {
+    updateSearchTerm: PropTypes.func.isRequired
 }
 
 export default SearchBar
